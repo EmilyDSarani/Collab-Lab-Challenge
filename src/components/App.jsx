@@ -24,6 +24,22 @@ export function App() {
 			setArtwork(json.data);
 		});
 	}
+	//this is a work around without using react-router
+	//we are sending it to the image page pathing it as "/art"
+	//setting the state to "art"
+	//pass this to List.jsx
+	function navigateToArtwork(art) {
+		setArtworkSelected(art);
+		// eslint-disable-next-line no-restricted-globals
+		history.pushState({}, '', '/art');
+	}
+	//then we we navigate back, we set the orginal state back to null
+	//pass this to ImageDetailPage.jsx
+	function navigateBack() {
+		// eslint-disable-next-line no-restricted-globals
+		history.back();
+		setArtworkSelected(null);
+	}
 
 	return (
 		<div className="App">
@@ -32,13 +48,17 @@ export function App() {
 			{!artworkSelected && <SearchForm onSearchSubmit={onSearchSubmit} />}
 			{/* we need a list view to go to the imagedetailpage */}
 			{artwork && !artworkSelected && (
-				<List artwork={artwork} setArtworkSelected={setArtworkSelected} />
+				<List artwork={artwork} navigation={navigateToArtwork} />
 			)}
 			{/* we want the selected artwork to go to the image detail page */}
 			{artworkSelected && (
-				<ImageDetailsPage imageId={artworkSelected.image_id} />
+				<ImageDetailsPage
+					imageId={artworkSelected.image_id}
+					navigateBack={navigateBack}
+				/>
 			)}
 			<Footer />
 		</div>
 	);
 }
+//need to commit something"
