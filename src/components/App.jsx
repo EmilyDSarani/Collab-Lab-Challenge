@@ -9,6 +9,7 @@ import List from './List';
 
 export function App() {
 	//we want our useState to start null so that there is no value assigned to them just set
+	//maybe change the null to an empty array?
 	const [artwork, setArtwork] = useState(null);
 	const [artworkSelected, setArtworkSelected] = useState(null);
 	const [toggle, setToggle] = useState(true);
