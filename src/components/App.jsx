@@ -11,6 +11,7 @@ export function App() {
 	//we want our useState to start null so that there is no value assigned to them just set
 	const [artwork, setArtwork] = useState(null);
 	const [artworkSelected, setArtworkSelected] = useState(null);
+	const [toggle, setToggle] = useState(true);
 
 	function onSearchSubmit(query) {
 		// Search for the users's query.
@@ -24,19 +25,32 @@ export function App() {
 			setArtwork(json.data);
 		});
 	}
+	function handleToggle() {
+		setToggle((prev) => !prev);
+	}
 
 	return (
 		<div className="App">
 			<h1>TCL Career Lab Art Finder</h1>
-			{/* no selected art work AND pass down the onsearch */}
-			{!artworkSelected && <SearchForm onSearchSubmit={onSearchSubmit} />}
-			{/* we need a list view to go to the imagedetailpage */}
-			{artwork && !artworkSelected && (
-				<List artwork={artwork} setArtworkSelected={setArtworkSelected} />
-			)}
-			{/* we want the selected artwork to go to the image detail page */}
-			{artworkSelected && (
-				<ImageDetailsPage imageId={artworkSelected.image_id} />
+			{toggle ? (
+				<>
+					{/* no selected art work AND pass down the onsearch */}
+					{!artworkSelected && <SearchForm onSearchSubmit={onSearchSubmit} />}
+					{/* we need a list view to go to the imagedetailpage */}
+					{artwork && !artworkSelected && (
+						<List artwork={artwork} setArtworkSelected={setArtworkSelected} />
+					)}
+				</>
+			) : (
+				<>
+					{/* we want the selected artwork to go to the image detail page */}
+					{artworkSelected && (
+						<ImageDetailsPage
+							handleToggle={handleToggle}
+							imageId={artworkSelected.image_id}
+						/>
+					)}
+				</>
 			)}
 			<Footer />
 		</div>
