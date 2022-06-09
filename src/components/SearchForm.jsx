@@ -9,7 +9,9 @@ export function SearchForm({ onSearchSubmit }) {
 		setQuery(evt.target.value);
 	}
 
-	function handleFormSubmit() {
+	function handleFormSubmit(e) {
+		//this is how we stop a refresh on submit
+		e.preventDefault();
 		onSearchSubmit(query);
 	}
 
